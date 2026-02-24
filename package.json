@@ -1,0 +1,17 @@
+{
+  "name": "autowright",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node index.js"
+  },
+  "dependencies": {
+    "crawlee": "^3.16.0",
+    "node-fetch": "^3.3.2",
+    "playwright": "^1.58.2"
+  }
+}
