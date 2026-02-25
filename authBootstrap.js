@@ -27,10 +27,16 @@ class AuthBootstrap {
     await page.fill(this.config.passwordSelector, this.config.password);
 
     // Submit
-    await Promise.all([
-      page.waitForNavigation({ waitUntil: 'networkidle' }),
-      page.click(this.config.submitSelector),
-    ]);
+    await page.click(this.config.submitSelector);
+    
+    try {
+      await page.waitForLoadState('domcontentloaded', { timeout: 30000 });
+    } catch (timeoutError) {
+      console.log('⚠️ Timeout waiting for page load after login. This may be normal for some apps. Proceeding with URL check.');
+    }
+    
+    // Give page a moment to settle after navigation
+    await page.waitForTimeout(2000);
 
     // Verify login success
     const currentUrl = page.url();

@@ -1,16 +1,16 @@
-const AuthBootstrap = require('./authBoothstrap');
+require('dotenv').config();
+const AuthBootstrap = require('./authBootstrap');
 const RawDomCrawler = require('./crawler');
 const DomAnalyzer = require('./domAnalyzer');
 
 (async () => {
   try {
     const crawler = new RawDomCrawler({
-      startUrls: ['https://auth.rocketaccount.com/u/login'],
+      startUrls: [process.env.START_URL],
       outputFile: 'raw-dom.json',
       headless: false,
       maxRequestsPerCrawl: 1,
-      userAgent:
-        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
+      userAgent: process.env.USER_AGENT,
     });
 
     console.log('Starting crawl...');
@@ -29,19 +29,19 @@ const DomAnalyzer = require('./domAnalyzer');
 
     if (analysisResults.pageType === 'login') {
 
-      const authSelectors = await analyzer.extractAuthSelectors();
+      const authSelectors = await analyzer.extractAuthSelectors(analysisResults);
 
       console.log('Extracted Auth Selectors:', JSON.stringify(authSelectors, null, 2));
 
       const auth = new AuthBootstrap({
-        baseUrl: 'https://auth.rocketaccount.com',
-        loginUrl: '/u/login',
-        username: 'your-email@example.com',
-        password: 'your-password',
+        baseUrl: process.env.BASE_URL,
+        loginUrl: process.env.LOGIN_URL,
+        username: process.env.LOGIN_USERNAME,
+        password: process.env.PASSWORD,
         usernameSelector: authSelectors.usernameSelector,
         passwordSelector: authSelectors.passwordSelector,
         submitSelector: authSelectors.submitSelector,
-        successUrlContains: '/dashboard', // adjust if needed
+        successUrlContains: process.env.SUCCESS_URL_CONTAINS,
       });
 
       try {
@@ -52,8 +52,10 @@ const DomAnalyzer = require('./domAnalyzer');
     }
 
     console.log('Workflow complete.');
+    process.exit(0);
 
   } catch (err) {
     console.error('Workflow crashed:', err);
+    process.exit(1);
   }
 })();

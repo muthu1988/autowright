@@ -1,4 +1,5 @@
 const fs = require('fs');
+const path = require('path');
 const OllamaClient = require('./llmClient');
 
 class DomAnalyzer {
@@ -13,8 +14,10 @@ class DomAnalyzer {
   }
 
   async analyze() {
+    // Look for input file in output directory
+    const inputPath = path.join('output', this.inputFile);
     const rawData = JSON.parse(
-      fs.readFileSync(this.inputFile, 'utf-8')
+      fs.readFileSync(inputPath, 'utf-8')
     );
 
     const page = rawData[0];
@@ -79,19 +82,26 @@ ${JSON.stringify(simplified, null, 2)}
     // ✅ Inject URL from crawler metadata (guaranteed correct)
     parsed.url = page.metadata.url;
 
+    // ✅ Ensure output directory exists
+    const outputDir = 'output';
+    if (!fs.existsSync(outputDir)) {
+      fs.mkdirSync(outputDir, { recursive: true });
+    }
+
     // ✅ Save clean formatted JSON only
+    const outputPath = path.join(outputDir, this.outputFile);
     fs.writeFileSync(
-      this.outputFile,
+      outputPath,
       JSON.stringify(parsed, null, 2)
     );
 
-    console.log(`Analysis saved to ${this.outputFile}`);
+    console.log(`Analysis saved to ${outputPath}`);
 
     return parsed;
   }
 
-  async extractAuthSelectors() {
-    const analysis = await this.analyze();
+  async extractAuthSelectors(existingAnalysis = null) {
+    const analysis = existingAnalysis || await this.analyze();
 
     if (analysis.pageType !== 'login') {
       throw new Error('Page is not identified as a login page');
@@ -129,6 +139,20 @@ ${JSON.stringify(simplified, null, 2)}
       fs.writeFileSync('raw-llm-output.txt', result);
       throw new Error('LLM returned malformed JSON');
     }
+
+    // ✅ Save selectors to analysis output file
+    const outputDir = 'output';
+    const outputPath = path.join(outputDir, this.outputFile);
+    
+    // Read existing analysis and add selectors
+    const updatedAnalysis = { ...analysis, authSelectors: selectors };
+    
+    fs.writeFileSync(
+      outputPath,
+      JSON.stringify(updatedAnalysis, null, 2)
+    );
+    
+    console.log(`Auth selectors saved to ${outputPath}`);
 
     return selectors;
   }

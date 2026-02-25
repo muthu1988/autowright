@@ -1,5 +1,6 @@
 const { PlaywrightCrawler } = require('crawlee');
 const fs = require('fs');
+const path = require('path');
 
 class RawDomCrawler {
   constructor(options = {}) {
@@ -95,8 +96,15 @@ class RawDomCrawler {
 
     await this.crawler.run(this.startUrls);
 
-    fs.writeFileSync(this.outputFile, JSON.stringify(this.results, null, 2));
-    console.log(`Raw page data saved to ${this.outputFile}`);
+    // Ensure output directory exists
+    const outputDir = 'output';
+    if (!fs.existsSync(outputDir)) {
+      fs.mkdirSync(outputDir, { recursive: true });
+    }
+
+    const outputPath = path.join(outputDir, this.outputFile);
+    fs.writeFileSync(outputPath, JSON.stringify(this.results, null, 2));
+    console.log(`Raw page data saved to ${outputPath}`);
 
     return this.results;
   }
