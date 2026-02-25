@@ -89,6 +89,49 @@ ${JSON.stringify(simplified, null, 2)}
 
     return parsed;
   }
+
+  async extractAuthSelectors() {
+    const analysis = await this.analyze();
+
+    if (analysis.pageType !== 'login') {
+      throw new Error('Page is not identified as a login page');
+    }
+
+    const prompt = `You are a senior QA automation engineer.
+
+    Based on the following page analysis, extract the most reliable Playwright selectors for username/email input, password input, and submit button.
+
+    Return ONLY valid JSON in the following format:
+    {
+      "usernameSelector": "...",
+      "passwordSelector": "...",
+      "submitSelector": "..."
+
+    }
+    PAGE ANALYSIS:
+    ${JSON.stringify(analysis, null, 2)}
+    `;
+
+    const result = await this.client.generate(prompt);
+
+    const jsonMatch = result.match(/\{[\s\S]*\}/);
+
+    if (!jsonMatch) {
+      fs.writeFileSync('raw-llm-output.txt', result);
+      throw new Error('No valid JSON found in LLM response');
+    }
+
+    let selectors;
+
+    try {
+      selectors = JSON.parse(jsonMatch[0]);
+    } catch (err) {
+      fs.writeFileSync('raw-llm-output.txt', result);
+      throw new Error('LLM returned malformed JSON');
+    }
+
+    return selectors;
+  }
 }
 
 module.exports = DomAnalyzer;

@@ -97,6 +97,8 @@ class RawDomCrawler {
 
     fs.writeFileSync(this.outputFile, JSON.stringify(this.results, null, 2));
     console.log(`Raw page data saved to ${this.outputFile}`);
+
+    return this.results;
   }
 }
 

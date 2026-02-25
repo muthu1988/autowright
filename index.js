@@ -1,3 +1,4 @@
+const AuthBootstrap = require('./authBoothstrap');
 const RawDomCrawler = require('./crawler');
 const DomAnalyzer = require('./domAnalyzer');
 
@@ -13,7 +14,7 @@ const DomAnalyzer = require('./domAnalyzer');
     });
 
     console.log('Starting crawl...');
-    await crawler.run();
+    const crawlData = await crawler.run();
     console.log('Crawl complete.');
 
     console.log('Starting LLM analysis...');
@@ -24,7 +25,31 @@ const DomAnalyzer = require('./domAnalyzer');
       temperature: 0.1,
     });
 
-    await analyzer.analyze();
+    const analysisResults = await analyzer.analyze();
+
+    if (analysisResults.pageType === 'login') {
+
+      const authSelectors = await analyzer.extractAuthSelectors();
+
+      console.log('Extracted Auth Selectors:', JSON.stringify(authSelectors, null, 2));
+
+      const auth = new AuthBootstrap({
+        baseUrl: 'https://auth.rocketaccount.com',
+        loginUrl: '/u/login',
+        username: 'your-email@example.com',
+        password: 'your-password',
+        usernameSelector: authSelectors.usernameSelector,
+        passwordSelector: authSelectors.passwordSelector,
+        submitSelector: authSelectors.submitSelector,
+        successUrlContains: '/dashboard', // adjust if needed
+      });
+
+      try {
+        await auth.login();
+      } catch (err) {
+        console.error(err);
+      }
+    }
 
     console.log('Workflow complete.');
 
