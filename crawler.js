@@ -6,6 +6,7 @@ class RawDomCrawler {
   constructor(options = {}) {
     this.startUrls = options.startUrls || [];
     this.outputFile = options.outputFile || 'raw-page-data.json';
+    this.outputDir = options.outputDir || 'output';
     this.results = [];
 
     this.crawler = new PlaywrightCrawler({
@@ -36,8 +37,8 @@ class RawDomCrawler {
 
       requestHandler: async ({ request, page, response, log }) => {
         try {
+          // High-level progress: log extraction start
           log.info(`Extracting raw DOM from: ${request.url}`);
-          console.log('HTTP Status:', response?.status());
 
           // 1️⃣ Wait for DOM
           await page.waitForLoadState('domcontentloaded');
@@ -97,13 +98,13 @@ class RawDomCrawler {
     await this.crawler.run(this.startUrls);
 
     // Ensure output directory exists
-    const outputDir = 'output';
-    if (!fs.existsSync(outputDir)) {
-      fs.mkdirSync(outputDir, { recursive: true });
+    if (!fs.existsSync(this.outputDir)) {
+      fs.mkdirSync(this.outputDir, { recursive: true });
     }
 
-    const outputPath = path.join(outputDir, this.outputFile);
+    const outputPath = path.join(this.outputDir, this.outputFile);
     fs.writeFileSync(outputPath, JSON.stringify(this.results, null, 2));
+    // High-level progress: log output file save
     console.log(`Raw page data saved to ${outputPath}`);
 
     return this.results;

@@ -3,3 +3,5 @@ storage
 .env
 output
 storage-state.json
+tests
+.cache

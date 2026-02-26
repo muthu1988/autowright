@@ -19,6 +19,7 @@ class AuthBootstrap {
       this.config.baseUrl
     ).toString();
 
+    // High-level progress: log navigation
     console.log(`Navigating to ${loginUrl}`);
     await page.goto(loginUrl, { waitUntil: 'domcontentloaded' });
 
@@ -31,7 +32,9 @@ class AuthBootstrap {
     
     try {
       await page.waitForLoadState('domcontentloaded', { timeout: 30000 });
+      await page.waitForLoadState('networkidle', { timeout: 30000 });
     } catch (timeoutError) {
+      // High-level progress: log timeout warning
       console.log('⚠️ Timeout waiting for page load after login. This may be normal for some apps. Proceeding with URL check.');
     }
     
@@ -55,6 +58,7 @@ class AuthBootstrap {
       path: 'storage-state.json',
     });
 
+    // High-level progress: log login success
     console.log('Login successful. Storage state saved.');
 
     await browser.close();
