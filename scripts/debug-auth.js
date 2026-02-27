@@ -1,5 +1,5 @@
 require('dotenv').config();
-const AuthBootstrap = require('./authBootstrap');
+const AuthBootstrap = require('../src/authBootstrap');
 const fs = require('fs');
 const path = require('path');
 

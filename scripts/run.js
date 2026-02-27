@@ -1,10 +1,10 @@
 require('dotenv').config();
-const AuthBootstrap = require('./authBootstrap');
-const RawDomCrawler = require('./crawler');
-const DomAnalyzer = require('./domAnalyzer');
-const RouteExplorer = require('./routeExplorer');
-const RouteAnalyzer = require('./routeAnalyzer');
-const { generateCrawlData } = require('./testDataGenerator');
+const AuthBootstrap = require('../src/authBootstrap');
+const RawDomCrawler = require('../src/domCrawler');
+const DomAnalyzer = require('../src/domAnalyzer');
+const RouteExplorer = require('../src/routeExplorer');
+const RouteAnalyzer = require('../src/routeAnalyzer');
+const { generateCrawlData } = require('../src/snapshotGenerator');
 
 
 

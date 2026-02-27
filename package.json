@@ -5,9 +5,11 @@
   "license": "ISC",
   "author": "",
   "type": "commonjs",
-  "main": "index.js",
+  "main": "scripts/run.js",
   "scripts": {
-    "dev": "node index.js"
+    "dev": "node scripts/run.js",
+    "debug:auth": "node scripts/debug-auth.js",
+    "debug:flows": "node scripts/debug-flows.js"
   },
   "dependencies": {
     "crawlee": "^3.16.0",

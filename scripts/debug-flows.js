@@ -1,12 +1,12 @@
 require('dotenv').config();
 const fs = require('fs');
 const path = require('path');
-const AuthBootstrap = require('./authBootstrap');
-const RawDomCrawler = require('./crawler');
-const DomAnalyzer = require('./domAnalyzer');
-const RouteExplorer = require('./routeExplorer');
-const RouteAnalyzer = require('./routeAnalyzer');
-const { generateCrawlData } = require('./testDataGenerator');
+const AuthBootstrap = require('../src/authBootstrap');
+const RawDomCrawler = require('../src/domCrawler');
+const DomAnalyzer = require('../src/domAnalyzer');
+const RouteExplorer = require('../src/routeExplorer');
+const RouteAnalyzer = require('../src/routeAnalyzer');
+const { generateCrawlData } = require('../src/snapshotGenerator');
 
 class FlowTester {
   constructor() {
@@ -513,14 +513,14 @@ async function main() {
       console.log(`
 🧪 Flow Tester Usage (Steps 3, 4 & 5 Focus):
 
-node test-flows.js steps34  - Test auth + routes + analysis using existing data (MAIN)
-node test-flows.js main     - Same as steps34 (alias)
-node test-flows.js auth     - Test authentication flow only (using existing data)
-node test-flows.js routes   - Test route exploration only (needs existing auth state)
-node test-flows.js analyze  - Test route analysis only (needs existing routes data)
-node test-flows.js generate - Test Step 6: Generate high priority test data (needs route analysis)
-node test-flows.js step6    - Same as generate (alias)
-node test-flows.js help     - Show this help
+node scripts/debug-flows.js steps34  - Test auth + routes + analysis using existing data (MAIN)
+node scripts/debug-flows.js main     - Same as steps34 (alias)
+node scripts/debug-flows.js auth     - Test authentication flow only (using existing data)
+node scripts/debug-flows.js routes   - Test route exploration only (needs existing auth state)
+node scripts/debug-flows.js analyze  - Test route analysis only (needs existing routes data)
+node scripts/debug-flows.js generate - Test Step 6: Generate high priority test data (needs route analysis)
+node scripts/debug-flows.js step6    - Same as generate (alias)
+node scripts/debug-flows.js help     - Show this help
 
 📋 Prerequisites:
 - Run steps 1-2 first to generate analysis data in output folder
@@ -536,8 +536,8 @@ node test-flows.js help     - Show this help
 
 💡 Recommended workflow:
 1. Run main app steps 1-2 OR ensure output/analysis-output.json exists
-2. Run: node test-flows.js steps34 (full flow with analysis)
-3. Or run: node test-flows.js analyze (just route analysis if routes exist)
+2. Run: node scripts/debug-flows.js steps34 (full flow with analysis)
+3. Or run: node scripts/debug-flows.js analyze (just route analysis if routes exist)
 
 📊 New Features:
 - Real-time navigation menu extraction during crawling
