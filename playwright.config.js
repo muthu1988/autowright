@@ -7,7 +7,7 @@ const { defineConfig, devices } = require('@playwright/test');
 module.exports = defineConfig({
   testDir: 'tests',
   testMatch: ['**/*.spec.js', '**/*.spec.ts'],
-  globalSetup: 'tests/global-setup.ts',
+  globalSetup: 'setup/global-setup.ts',
   timeout: 120_000,         // per-test timeout (SSO redirect chain can consume 30-60s)
   retries: 0,
   expect: {

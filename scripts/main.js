@@ -112,6 +112,10 @@ if (process.argv.includes('--fresh')) {
     if (includedUrls.length === 0) {
       console.log('\n[run] No routes marked as included in routes.config.json — skipping Steps 5, 6 and 7.');
       console.log('[run] To process routes: open routes.config.json and set status to "included" for the routes you want.');
+      console.log('\n💡 Next Steps:');
+      console.log('   1. Review routes.config.json and mark important routes as "included"');
+      console.log('   2. Re-run this script to process the included routes');
+      console.log('   3. Or use @autowright in Copilot Chat to generate tests: "Autowright run all included routes"');
     } else {
       // ---------------------------------
       // STEP 4b: Ensure auth session is still valid before crawling
@@ -152,9 +156,22 @@ if (process.argv.includes('--fresh')) {
 
     const mins = ((Date.now() - pipelineStart) / 1000 / 60).toFixed(2);
     console.log(`\n✅ Pipeline complete in ${mins} minutes`);
+    console.log('\n🚀 Ready for Test Generation!');
+    console.log('💬 Next Steps: Open Copilot Chat and use the @autowright agent:');
+    console.log('   • "@autowright run all included routes" - Generate tests for all included routes');
+    console.log('   • "@autowright make-a-payment" - Generate tests for specific route');
+    console.log('   • "@autowright help" - View all available commands');
+    console.log('\n📁 Data ready in:');
+    console.log('   • config/routes.config.json - Route configuration');
+    console.log('   • output/route-analysis.json - Risk analysis results');
+    console.log('   • data/analysis/ - Dynamic interaction data');
   } catch (err) {
     const mins = ((Date.now() - pipelineStart) / 1000 / 60).toFixed(2);
     console.error(`Workflow crashed after ${mins} minutes:`, err);
+    console.log('\n🆘 Need Help? Use Copilot Chat for debugging:');
+    console.log('   • "@autowright debug this error" - Get help with the error above');
+    console.log('   • "What went wrong with autowright pipeline?" - Troubleshoot issues');
+    console.log('   • Check the logs above for specific error details');
     process.exit(1);
   }
 })();

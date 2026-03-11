@@ -11,7 +11,7 @@ agents:
   - playwright-test-planner
   - playwright-test-generator
   - playwright-test-healer
-model: Claude Sonnet 4
+model: Claude Opus 4.5 (copilot)
 mcp-servers:
   playwright-test:
     type: stdio
@@ -29,7 +29,7 @@ handoffs:
       initial ARIA snapshot, and recorded interactions from dynamic-analysis.json) to build a
       comprehensive test plan. Call planner_setup_page with the URL, then use the ARIA snapshot
       and interaction list to design scenarios WITHOUT re-exploring every element from scratch.
-      Finalise with planner_save_plan.
+      Finalise with planner_save_plan — save the plan inside the tests/ directory (e.g. tests/<route-path>/plan.md), NOT in the project root.
     send: true
   - label: "Phase 2 — Generate"
     agent: playwright-test-generator
@@ -160,6 +160,7 @@ Delegate to `playwright-test-planner`, passing for each route:
   any action matching**: "Schedule payment", "Confirm", "Save", "Submit", "Cancel payment",
   "Delete", "Pay now"
 
+Explicitly instruct the planner to save the plan inside `tests/<path>/plan.md` (e.g. `tests/dashboard/plan.md`).
 Wait until `planner_save_plan` confirms the plan is saved. Report: number of suites and scenarios.
 
 ### Phase 2 — Generate

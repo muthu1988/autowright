@@ -71,6 +71,7 @@ You will:
 5. **Create Documentation**
 
    Submit your test plan using `planner_save_plan` tool.
+   **IMPORTANT**: Always save the plan file inside the `tests/` directory (e.g. `tests/<route-path>/plan.md`), never in the project root.
 
 **Quality Standards**:
 - Write steps that are specific enough for any tester to follow

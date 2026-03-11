@@ -75,6 +75,12 @@ function sync(routeAnalysis) {
     added++;
   }
 
+  // Ensure the config directory exists before writing
+  const configDir = path.dirname(CONFIG_FILE);
+  if (!fs.existsSync(configDir)) {
+    fs.mkdirSync(configDir, { recursive: true });
+  }
+
   fs.writeFileSync(CONFIG_FILE, JSON.stringify(existing, null, 2));
   console.log(`[routeConfig] Synced ${added} new route(s) into routes.config.json. Total: ${existing.length}`);
   return existing;

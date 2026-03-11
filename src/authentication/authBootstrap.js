@@ -29,8 +29,8 @@ class AuthBootstrap {
     await page.click(this.config.submitSelector);
     
     try {
-      await page.waitForLoadState('domcontentloaded', { timeout: 30000 });
-      await page.waitForLoadState('networkidle', { timeout: 30000 });
+      await page.waitForLoadState('domcontentloaded', { timeout: 20000 });
+      await page.waitForLoadState('networkidle', { timeout: 20000 });
     } catch (timeoutError) {
       // High-level progress: log timeout warning
       console.log('⚠️ Timeout waiting for page load after login. This may be normal for some apps. Proceeding with URL check.');
