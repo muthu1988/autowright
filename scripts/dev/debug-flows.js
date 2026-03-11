@@ -1,12 +1,12 @@
 require('dotenv').config();
 const fs = require('fs');
 const path = require('path');
-const AuthBootstrap = require('../src/authBootstrap');
-const RawDomCrawler = require('../src/domCrawler');
-const DomAnalyzer = require('../src/domAnalyzer');
-const RouteExplorer = require('../src/routeExplorer');
-const RouteAnalyzer = require('../src/routeAnalyzer');
-const { generateCrawlData } = require('../src/snapshotGenerator');
+const AuthBootstrap = require('../../src/authentication/authBootstrap');
+const RawDomCrawler = require('../../src/dom-analysis/domCrawler');
+const DomAnalyzer = require('../../src/dom-analysis/domAnalyzer');
+const RouteExplorer = require('../../src/route-discovery/routeExplorer');
+const RouteAnalyzer = require('../../src/route-discovery/routeAnalyzer');
+const { generateCrawlData } = require('../../src/dom-analysis/snapshotGenerator');
 
 class FlowTester {
   constructor() {
@@ -71,8 +71,7 @@ class FlowTester {
       // High-level: login process log
       console.log('Testing login process...');
       const auth = new AuthBootstrap({
-        baseUrl: process.env.BASE_URL,
-        loginUrl: process.env.LOGIN_URL,
+        loginUrl: process.env.START_URL,
         username: process.env.LOGIN_USERNAME,
         password: process.env.PASSWORD,
         usernameSelector: authSelectors.usernameSelector,
@@ -162,7 +161,7 @@ class FlowTester {
     try {
       // Validate environment variables
       console.log('0. Validating environment configuration...');
-      const requiredEnvVars = ['BASE_URL', 'LOGIN_URL', 'POST_LOGIN_URL', 'LOGIN_USERNAME', 'PASSWORD', 'SUCCESS_URL_CONTAINS'];
+      const requiredEnvVars = ['BASE_URL', 'START_URL', 'POST_LOGIN_URL', 'LOGIN_USERNAME', 'PASSWORD', 'SUCCESS_URL_CONTAINS'];
       const missingVars = requiredEnvVars.filter(varName => !process.env[varName]);
       
       if (missingVars.length > 0) {
@@ -170,7 +169,7 @@ class FlowTester {
       }
       
       console.log('✅ All required environment variables are set');
-      console.log(`   LOGIN_URL: ${process.env.LOGIN_URL}`);
+      console.log(`   START_URL: ${process.env.START_URL}`);
       console.log(`   POST_LOGIN_URL: ${process.env.POST_LOGIN_URL}`);
       console.log(`   BASE_URL: ${process.env.BASE_URL}`);
 
@@ -197,8 +196,7 @@ class FlowTester {
 
       console.log('3. Performing login...');
       const auth = new AuthBootstrap({
-        baseUrl: process.env.BASE_URL,
-        loginUrl: process.env.LOGIN_URL,
+        loginUrl: process.env.START_URL,
         username: process.env.LOGIN_USERNAME,
         password: process.env.PASSWORD,
         usernameSelector: authSelectors.usernameSelector,
@@ -529,7 +527,7 @@ node scripts/debug-flows.js help     - Show this help
 - For test data generation: output/route-analysis.json + storage-state.json
 
 🔧 Environment variables required:
-- BASE_URL, LOGIN_URL, POST_LOGIN_URL
+- BASE_URL, START_URL, POST_LOGIN_URL
 - LOGIN_USERNAME, PASSWORD  
 - SUCCESS_URL_CONTAINS
 - USER_AGENT (optional)

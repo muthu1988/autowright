@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
-const OllamaClient = require('./llmClient');
+const OllamaClient = require('../services/llmClient');
 
 class DomAnalyzer {
   constructor(options = {}) {
@@ -87,7 +87,17 @@ class DomAnalyzer {
 
     const page = rawData[0];
 
-    const interactive = page.elements.filter(el =>
+    // Support both flat `elements` array (legacy) and nested `tree` structure
+    function flattenTree(node, acc = []) {
+      if (!node) return acc;
+      const { children, ...rest } = node;
+      acc.push(rest);
+      if (children) children.forEach(child => flattenTree(child, acc));
+      return acc;
+    }
+    const elements = page.elements || (page.tree ? flattenTree(page.tree) : []);
+
+    const interactive = elements.filter(el =>
       ['button', 'input', 'select', 'textarea', 'a'].includes(el.tag)
     );
 
@@ -161,7 +171,7 @@ ${JSON.stringify(simplified, null, 2)}
 
     // High-level: LLM request log
     console.log('Generating fresh LLM response for analyze...');
-    const result = await this.client.generate(prompt);
+    const result = await this.client.generate(prompt, 'DomAnalyzer.analyze');
 
     // 🔥 Extract JSON safely
     const jsonMatch = result.match(/\{[\s\S]*\}/);
@@ -251,7 +261,7 @@ ${JSON.stringify(simplified, null, 2)}
     `;
 
     console.log('🤖 Generating fresh LLM response for extractAuthSelectors...');
-    const result = await this.client.generate(prompt);
+    const result = await this.client.generate(prompt, 'DomAnalyzer.extractAuthSelectors');
 
     const jsonMatch = result.match(/\{[\s\S]*\}/);
 

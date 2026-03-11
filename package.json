@@ -1,20 +1,27 @@
 {
   "name": "autowright",
   "version": "1.0.0",
-  "description": "",
+  "description": "Playwright test automation pipeline with dynamic analysis and AI-driven test generation",
   "license": "ISC",
-  "author": "",
+  "author": "AutoWright Team",
   "type": "commonjs",
-  "main": "scripts/run.js",
+  "main": "scripts/main.js",
   "scripts": {
-    "dev": "node scripts/run.js",
-    "debug:auth": "node scripts/debug-auth.js",
-    "debug:flows": "node scripts/debug-flows.js"
+    "dev:main": "node scripts/main.js",
+    "dev:debug-flows": "node scripts/dev/debug-flows.js",
+    "build:clean": "node scripts/build/clean.js",
+    "clean": "npm run build:clean",
+    "fresh": "npm run clean && node scripts/main.js --fresh",
+    "postinstall": "npx playwright install chromium"
   },
   "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.27.1",
+    "@playwright/mcp": "^0.0.68",
+    "@playwright/test": "^1.58.2",
     "crawlee": "^3.16.0",
     "dotenv": "^17.3.1",
     "node-fetch": "^3.3.2",
+    "openai": "^6.27.0",
     "playwright": "^1.58.2"
   }
 }

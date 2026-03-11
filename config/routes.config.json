@@ -1,0 +1,513 @@
+[
+  {
+    "url": "/mortgage/servicing",
+    "name": "Servicing",
+    "riskLevel": "Unknown",
+    "businessCriticality": "Unknown",
+    "status": "included"
+  },
+  {
+    "url": "/mortgage/account-settings",
+    "name": "Account Settings",
+    "riskLevel": "Unknown",
+    "businessCriticality": "Unknown",
+    "status": "excluded"
+  },
+  {
+    "url": "/mortgage/servicing/3554123334/tools-and-services",
+    "name": "Tools And Services",
+    "riskLevel": "Unknown",
+    "businessCriticality": "Unknown",
+    "status": "excluded"
+  },
+  {
+    "url": "/mortgage/account-settings/security",
+    "name": "Security",
+    "riskLevel": "Medium",
+    "businessCriticality": "High",
+    "status": "excluded"
+  },
+  {
+    "url": "/mortgage/servicing/talk-to-us?loanNumber=3554123334",
+    "name": "Talk To Us",
+    "riskLevel": "Unknown",
+    "businessCriticality": "Unknown",
+    "status": "excluded"
+  },
+  {
+    "url": "/mortgage/servicing/support-inbox",
+    "name": "Support Inbox",
+    "riskLevel": "Unknown",
+    "businessCriticality": "Unknown",
+    "status": "excluded"
+  },
+  {
+    "url": "/mortgage/servicing/manage-autopay?loanNumber=3554123334",
+    "name": "Manage Autopay",
+    "riskLevel": "High",
+    "businessCriticality": "Critical",
+    "status": "excluded"
+  },
+  {
+    "url": "/mortgage/servicing/manage-bank-accounts?loanNumber=3554123334",
+    "name": "Manage Bank Accounts",
+    "riskLevel": "Unknown",
+    "businessCriticality": "Unknown",
+    "status": "excluded"
+  },
+  {
+    "url": "/mortgage/servicing/transaction-history?loanNumber=3554123334",
+    "name": "Transaction History",
+    "riskLevel": "Low",
+    "businessCriticality": "Moderate",
+    "status": "excluded"
+  },
+  {
+    "url": "/mortgage/servicing/documents?loanNumber=3554123334",
+    "name": "Documents",
+    "riskLevel": "Unknown",
+    "businessCriticality": "Unknown",
+    "status": "excluded"
+  },
+  {
+    "url": "/mortgage/servicing/3554123334/escrow",
+    "name": "Escrow",
+    "riskLevel": "Unknown",
+    "businessCriticality": "Unknown",
+    "status": "excluded"
+  },
+  {
+    "url": "/mortgage/servicing/loan-information?loanNumber=3554123334",
+    "name": "Loan Information",
+    "riskLevel": "Unknown",
+    "businessCriticality": "Unknown",
+    "status": "excluded"
+  },
+  {
+    "url": "/mortgage/servicing/3554123334/taxes-and-insurance",
+    "name": "Taxes And Insurance",
+    "riskLevel": "Unknown",
+    "businessCriticality": "Unknown",
+    "status": "excluded"
+  },
+  {
+    "url": "/mortgage/servicing/3554123334/private-mortgage-insurance",
+    "name": "Private Mortgage Insurance",
+    "riskLevel": "Unknown",
+    "businessCriticality": "Unknown",
+    "status": "excluded"
+  },
+  {
+    "url": "/mortgage/servicing/3554123334/faqs",
+    "name": "Faqs",
+    "riskLevel": "Unknown",
+    "businessCriticality": "Unknown",
+    "status": "excluded"
+  },
+  {
+    "url": "/mortgage/servicing/3554123334/payment-assistance",
+    "name": "Payment Assistance",
+    "riskLevel": "Unknown",
+    "businessCriticality": "Unknown",
+    "status": "excluded"
+  },
+  {
+    "url": "/mortgage/servicing/3554123334/payment-assistance/disaster-relief",
+    "name": "Disaster Relief",
+    "riskLevel": "Unknown",
+    "businessCriticality": "Unknown",
+    "status": "excluded"
+  },
+  {
+    "url": "/mortgage/servicing/3554123334/insurance-claim-assistance",
+    "name": "Insurance Claim Assistance",
+    "riskLevel": "Unknown",
+    "businessCriticality": "Unknown",
+    "status": "excluded"
+  },
+  {
+    "url": "/mortgage/servicing/documents/year-end-tax-guide",
+    "name": "Year End Tax Guide",
+    "riskLevel": "Unknown",
+    "businessCriticality": "Unknown",
+    "status": "excluded"
+  },
+  {
+    "url": "/mortgage/debug",
+    "name": "Debug",
+    "riskLevel": "Unknown",
+    "businessCriticality": "Unknown",
+    "status": "excluded"
+  },
+  {
+    "url": "/mortgage/servicing/loan-information/calculators/amortization",
+    "name": "Amortization",
+    "riskLevel": "Unknown",
+    "businessCriticality": "Unknown",
+    "status": "excluded"
+  },
+  {
+    "url": "/mortgage/calculators/refinance-calculator",
+    "name": "Refinance Calculator",
+    "riskLevel": "Unknown",
+    "businessCriticality": "Unknown",
+    "status": "excluded"
+  },
+  {
+    "url": "/mortgage/servicing/make-a-payment?loanNumber=3554123334",
+    "name": "Make A Payment",
+    "riskLevel": "High",
+    "businessCriticality": "Critical",
+    "status": "included"
+  },
+  {
+    "url": "/mortgage/servicing/tools-and-services",
+    "name": "Tools And Services",
+    "riskLevel": "Unknown",
+    "businessCriticality": "Unknown",
+    "status": "excluded"
+  },
+  {
+    "url": "/mortgage/servicing/undefined/faqs",
+    "name": "Faqs",
+    "riskLevel": "Unknown",
+    "businessCriticality": "Unknown",
+    "status": "excluded"
+  },
+  {
+    "url": "/mortgage/account-settings/contact-information",
+    "name": "Contact Information",
+    "riskLevel": "Unknown",
+    "businessCriticality": "Unknown",
+    "status": "excluded"
+  },
+  {
+    "url": "/mortgage/account-settings/paperless",
+    "name": "Paperless",
+    "riskLevel": "Unknown",
+    "businessCriticality": "Unknown",
+    "status": "excluded"
+  },
+  {
+    "url": "/mortgage/account-settings/privacy-policies",
+    "name": "Privacy Policies",
+    "riskLevel": "Unknown",
+    "businessCriticality": "Unknown",
+    "status": "excluded"
+  },
+  {
+    "url": "/mortgage/servicing/loan-information/calculators/payoff-estimate",
+    "name": "Payoff Estimate",
+    "riskLevel": "Unknown",
+    "businessCriticality": "Unknown",
+    "status": "excluded"
+  },
+  {
+    "url": "/mortgage/servicing/documents/upload",
+    "name": "Upload",
+    "riskLevel": "Unknown",
+    "businessCriticality": "Unknown",
+    "status": "excluded"
+  },
+  {
+    "url": "/auth/logout",
+    "name": "Logout",
+    "riskLevel": "Unknown",
+    "businessCriticality": "Unknown",
+    "status": "excluded"
+  },
+  {
+    "url": "/homes",
+    "name": "Homes",
+    "riskLevel": "Unknown",
+    "businessCriticality": "Unknown",
+    "status": "excluded"
+  },
+  {
+    "url": "/homes/buy",
+    "name": "Buy",
+    "riskLevel": "Unknown",
+    "businessCriticality": "Unknown",
+    "status": "excluded"
+  },
+  {
+    "url": "/mortgage/calculators/home-affordability-calculator",
+    "name": "Home Affordability Calculator",
+    "riskLevel": "Unknown",
+    "businessCriticality": "Unknown",
+    "status": "excluded"
+  },
+  {
+    "url": "/mortgage/calculators/mortgage-calculator",
+    "name": "Mortgage Calculator",
+    "riskLevel": "Unknown",
+    "businessCriticality": "Unknown",
+    "status": "excluded"
+  },
+  {
+    "url": "/mortgage/calculators/rent-vs-buy",
+    "name": "Rent Vs Buy",
+    "riskLevel": "Unknown",
+    "businessCriticality": "Unknown",
+    "status": "excluded"
+  },
+  {
+    "url": "/mortgage/purchase/get-started",
+    "name": "Get Started",
+    "riskLevel": "Unknown",
+    "businessCriticality": "Unknown",
+    "status": "excluded"
+  },
+  {
+    "url": "/mortgage/home-loans",
+    "name": "Home Loans",
+    "riskLevel": "Unknown",
+    "businessCriticality": "Unknown",
+    "status": "excluded"
+  },
+  {
+    "url": "/mortgage/es/soluciones-reales-en-rocket",
+    "name": "Soluciones Reales En Rocket",
+    "riskLevel": "Unknown",
+    "businessCriticality": "Unknown",
+    "status": "excluded"
+  },
+  {
+    "url": "/mortgage/es/refinanciar/empezar",
+    "name": "Empezar",
+    "riskLevel": "Unknown",
+    "businessCriticality": "Unknown",
+    "status": "excluded"
+  },
+  {
+    "url": "/mortgage/mortgage-rates",
+    "name": "Mortgage Rates",
+    "riskLevel": "Unknown",
+    "businessCriticality": "Unknown",
+    "status": "excluded"
+  },
+  {
+    "url": "/mortgage/rate-updates",
+    "name": "Rate Updates",
+    "riskLevel": "Unknown",
+    "businessCriticality": "Unknown",
+    "status": "excluded"
+  },
+  {
+    "url": "/mortgage/calculators/down-payment-calculator",
+    "name": "Down Payment Calculator",
+    "riskLevel": "Unknown",
+    "businessCriticality": "Unknown",
+    "status": "excluded"
+  },
+  {
+    "url": "/mortgage/calculators/amortization-calculator",
+    "name": "Amortization Calculator",
+    "riskLevel": "Unknown",
+    "businessCriticality": "Unknown",
+    "status": "excluded"
+  },
+  {
+    "url": "/mortgage/purchase/va-military-homebuyer",
+    "name": "Va Military Homebuyer",
+    "riskLevel": "Unknown",
+    "businessCriticality": "Unknown",
+    "status": "excluded"
+  },
+  {
+    "url": "/mortgage/purchase/first-time-homebuyer",
+    "name": "First Time Homebuyer",
+    "riskLevel": "Unknown",
+    "businessCriticality": "Unknown",
+    "status": "excluded"
+  },
+  {
+    "url": "/mortgage/redfin",
+    "name": "Redfin",
+    "riskLevel": "Unknown",
+    "businessCriticality": "Unknown",
+    "status": "excluded"
+  },
+  {
+    "url": "/mortgage/home-loans/15-year-mortgage",
+    "name": "15 Year Mortgage",
+    "riskLevel": "Unknown",
+    "businessCriticality": "Unknown",
+    "status": "excluded"
+  },
+  {
+    "url": "/mortgage/home-loans/30-year-mortgage",
+    "name": "30 Year Mortgage",
+    "riskLevel": "Unknown",
+    "businessCriticality": "Unknown",
+    "status": "excluded"
+  },
+  {
+    "url": "/mortgage/home-loans/adjustable-rate-mortgage",
+    "name": "Adjustable Rate Mortgage",
+    "riskLevel": "Unknown",
+    "businessCriticality": "Unknown",
+    "status": "excluded"
+  },
+  {
+    "url": "/mortgage/home-loans/bridge-loan",
+    "name": "Bridge Loan",
+    "riskLevel": "Unknown",
+    "businessCriticality": "Unknown",
+    "status": "excluded"
+  },
+  {
+    "url": "/mortgage/home-loans/fha-loan",
+    "name": "Fha Loan",
+    "riskLevel": "Unknown",
+    "businessCriticality": "Unknown",
+    "status": "excluded"
+  },
+  {
+    "url": "/mortgage/home-loans/homeready-and-home-possible",
+    "name": "Homeready And Home Possible",
+    "riskLevel": "Unknown",
+    "businessCriticality": "Unknown",
+    "status": "excluded"
+  },
+  {
+    "url": "/mortgage/home-loans/jumbo-loan",
+    "name": "Jumbo Loan",
+    "riskLevel": "Unknown",
+    "businessCriticality": "Unknown",
+    "status": "excluded"
+  },
+  {
+    "url": "/mortgage/home-loans/one-plus",
+    "name": "One Plus",
+    "riskLevel": "Unknown",
+    "businessCriticality": "Unknown",
+    "status": "excluded"
+  },
+  {
+    "url": "/mortgage/home-loans/rate-and-term-refinance",
+    "name": "Rate And Term Refinance",
+    "riskLevel": "Unknown",
+    "businessCriticality": "Unknown",
+    "status": "excluded"
+  },
+  {
+    "url": "/mortgage/home-loans/va-loan",
+    "name": "Va Loan",
+    "riskLevel": "Unknown",
+    "businessCriticality": "Unknown",
+    "status": "excluded"
+  },
+  {
+    "url": "/mortgage/es/faqs",
+    "name": "Faqs",
+    "riskLevel": "Unknown",
+    "businessCriticality": "Unknown",
+    "status": "excluded"
+  },
+  {
+    "url": "/homes/sell",
+    "name": "Sell",
+    "riskLevel": "Unknown",
+    "businessCriticality": "Unknown",
+    "status": "excluded"
+  },
+  {
+    "url": "/homes/property-report",
+    "name": "Property Report",
+    "riskLevel": "Unknown",
+    "businessCriticality": "Unknown",
+    "status": "excluded"
+  },
+  {
+    "url": "/mortgage/refinance/get-started",
+    "name": "Get Started",
+    "riskLevel": "Unknown",
+    "businessCriticality": "Unknown",
+    "status": "excluded"
+  },
+  {
+    "url": "/mortgage/home-loans/home-equity-loan ",
+    "name": "Home Equity Loan",
+    "riskLevel": "Unknown",
+    "businessCriticality": "Unknown",
+    "status": "excluded"
+  },
+  {
+    "url": "/mortgage/refinance-rates",
+    "name": "Refinance Rates",
+    "riskLevel": "Unknown",
+    "businessCriticality": "Unknown",
+    "status": "excluded"
+  },
+  {
+    "url": "/mortgage/calculators/mortgage-payoff-calculator",
+    "name": "Mortgage Payoff Calculator",
+    "riskLevel": "Unknown",
+    "businessCriticality": "Unknown",
+    "status": "excluded"
+  },
+  {
+    "url": "/mortgage/refinance/va-military-refinance",
+    "name": "Va Military Refinance",
+    "riskLevel": "Unknown",
+    "businessCriticality": "Unknown",
+    "status": "excluded"
+  },
+  {
+    "url": "/mortgage/subscribe",
+    "name": "Subscribe",
+    "riskLevel": "Unknown",
+    "businessCriticality": "Unknown",
+    "status": "excluded"
+  },
+  {
+    "url": "/mortgage/calculators/home-equity-calculator",
+    "name": "Home Equity Calculator",
+    "riskLevel": "Unknown",
+    "businessCriticality": "Unknown",
+    "status": "excluded"
+  },
+  {
+    "url": "/mortgage/refinance/debt-consolidation",
+    "name": "Debt Consolidation",
+    "riskLevel": "Unknown",
+    "businessCriticality": "Unknown",
+    "status": "excluded"
+  },
+  {
+    "url": "/mortgage/home-loans/refinance-cash-out",
+    "name": "Refinance Cash Out",
+    "riskLevel": "Unknown",
+    "businessCriticality": "Unknown",
+    "status": "excluded"
+  },
+  {
+    "url": "/mortgage/pre-sign?returnTo=/mortgage/loan-router",
+    "name": "Pre Sign",
+    "riskLevel": "Unknown",
+    "businessCriticality": "Unknown",
+    "status": "excluded"
+  },
+  {
+    "url": "/",
+    "name": "",
+    "riskLevel": "Unknown",
+    "businessCriticality": "Unknown",
+    "status": "excluded"
+  },
+  {
+    "url": "/mortgage",
+    "name": "Mortgage",
+    "riskLevel": "Unknown",
+    "businessCriticality": "Unknown",
+    "status": "excluded"
+  },
+  {
+    "url": "/mortgage/calculators",
+    "name": "Calculators",
+    "riskLevel": "Unknown",
+    "businessCriticality": "Unknown",
+    "status": "excluded"
+  }
+]

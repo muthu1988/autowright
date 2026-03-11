@@ -50,21 +50,36 @@ class RawDomCrawler {
           await page.waitForTimeout(2000);
 
           const pageData = await page.evaluate(() => {
-            const elements = Array.from(document.querySelectorAll('*')).map(el => ({
-              tag: el.tagName.toLowerCase(),
-              id: el.id || null,
-              name: el.getAttribute('name'),
-              type: el.getAttribute('type'),
-              role: el.getAttribute('role'),
-              testId: el.getAttribute('data-testid'),
-              ariaLabel: el.getAttribute('aria-label'),
-              placeholder: el.getAttribute('placeholder'),
-              text: el.innerText?.trim() || null,
-              attributes: Array.from(el.attributes).reduce((acc, attr) => {
-                acc[attr.name] = attr.value;
-                return acc;
-              }, {}),
-            }));
+            function buildTree(el) {
+              const node = {
+                tag: el.tagName.toLowerCase(),
+                id: el.id || null,
+                name: el.getAttribute('name'),
+                type: el.getAttribute('type'),
+                role: el.getAttribute('role'),
+                testId: el.getAttribute('data-testid'),
+                ariaLabel: el.getAttribute('aria-label'),
+                placeholder: el.getAttribute('placeholder'),
+                text: el.childNodes.length
+                  ? Array.from(el.childNodes)
+                      .filter(n => n.nodeType === Node.TEXT_NODE)
+                      .map(n => n.textContent.trim())
+                      .filter(Boolean)
+                      .join(' ') || null
+                  : el.innerText?.trim() || null,
+                attributes: Array.from(el.attributes).reduce((acc, attr) => {
+                  acc[attr.name] = attr.value;
+                  return acc;
+                }, {}),
+              };
+
+              const children = Array.from(el.children).map(buildTree);
+              if (children.length > 0) {
+                node.children = children;
+              }
+
+              return node;
+            }
 
             return {
               metadata: {
@@ -72,7 +87,7 @@ class RawDomCrawler {
                 url: window.location.href,
                 userAgent: navigator.userAgent,
               },
-              elements,
+              tree: buildTree(document.documentElement),
             };
           });
 

@@ -14,10 +14,8 @@ class AuthBootstrap {
     const context = await browser.newContext();
     const page = await context.newPage();
 
-    const loginUrl = new URL(
-      this.config.loginUrl,
-      this.config.baseUrl
-    ).toString();
+    // loginUrl is a full URL (from START_URL env var)
+    const loginUrl = this.config.loginUrl;
 
     // High-level progress: log navigation
     console.log(`Navigating to ${loginUrl}`);
@@ -55,7 +53,7 @@ class AuthBootstrap {
 
     // Save storage state
     await context.storageState({
-      path: 'storage-state.json',
+      path: 'data/storage-state.json',
     });
 
     // High-level progress: log login success

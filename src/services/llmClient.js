@@ -6,9 +6,10 @@ class OllamaClient {
     this.timeout = options.timeout || 300000; // 5 minutes default timeout
   }
 
-  async generate(prompt) {
+  async generate(prompt, label = 'unknown') {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), this.timeout);
+    const start = Date.now();
 
     try {
       const response = await fetch(`${this.baseUrl}/api/generate`, {
@@ -31,11 +32,16 @@ class OllamaClient {
       }
 
       const data = await response.json();
+      const secs = ((Date.now() - start) / 1000).toFixed(1);
+      console.log(`  ⏱  LLM [${label}] — ${secs}s (prompt: ${prompt.length} chars, response: ${(data.response ?? '').length} chars, model: ${this.model})`);
       return data.response;
     } catch (error) {
+      const secs = ((Date.now() - start) / 1000).toFixed(1);
       if (error.name === 'AbortError') {
+        console.log(`  ❌ LLM [${label}] — timed out after ${secs}s`);
         throw new Error(`LLM request timed out after ${this.timeout / 1000} seconds`);
       }
+      console.log(`  ❌ LLM [${label}] — failed after ${secs}s: ${error.message}`);
       throw error;
     } finally {
       clearTimeout(timeoutId);

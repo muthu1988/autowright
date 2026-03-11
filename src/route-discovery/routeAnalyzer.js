@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
-const LLMClient = require('./llmClient');
+const LLMClient = require('../services/llmClient');
 
 class RouteAnalyzer {
   constructor(options = {}) {
@@ -140,7 +140,7 @@ class RouteAnalyzer {
     try {
       // High-level: LLM request log
       console.log('Generating fresh LLM response for analyzeRoutes...');
-      const llmResponse = await this.llmClient.generate(analysisPrompt);
+      const llmResponse = await this.llmClient.generate(analysisPrompt, 'RouteAnalyzer');
 
       // Debug: Save raw LLM response for troubleshooting
       if (process.env.DEBUG_LLM) {

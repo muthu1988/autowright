@@ -87,6 +87,21 @@ async function generateCrawlData(routeAnalysis, options = {}) {
     }
   });
 
+  // Apply filterUrls if provided — keep only routes whose path matches an included URL
+  if (config.filterUrls && config.filterUrls.length > 0) {
+    const allowedPaths = new Set(
+      config.filterUrls.map(u => { try { return new URL(u).pathname; } catch { return u.split('?')[0]; } })
+    );
+    for (const menu of allRoutes) {
+      menu.routes = menu.routes.filter(r => {
+        const rPath = r.split('?')[0];
+        return allowedPaths.has(rPath);
+      });
+    }
+    // Drop menus that have no matching routes left
+    allRoutes.splice(0, allRoutes.length, ...allRoutes.filter(m => m.routes.length > 0));
+  }
+
   // Apply maxRoutes limit if specified
   if (config.maxRoutes && config.maxRoutes > 0) {
     allRoutes.splice(config.maxRoutes);
@@ -158,8 +173,8 @@ async function generateCrawlData(routeAnalysis, options = {}) {
         });
         let storageState = null;
         try {
-          if (fs.existsSync('storage-state.json')) {
-            storageState = JSON.parse(fs.readFileSync('storage-state.json', 'utf8'));
+          if (fs.existsSync('data/storage-state.json')) {
+            storageState = JSON.parse(fs.readFileSync('data/storage-state.json', 'utf8'));
           } else {
             throw new Error('Storage state file not found');
           }
@@ -185,28 +200,39 @@ async function generateCrawlData(routeAnalysis, options = {}) {
           await page.waitForLoadState('networkidle', { timeout: 30000 }).catch(() => {});
           await page.waitForTimeout(5000);
           const pageData = await page.evaluate(() => {
-            const elements = Array.from(document.querySelectorAll('*')).map(el => ({
-              tag: el.tagName.toLowerCase(),
-              id: el.id || null,
-              name: el.getAttribute('name'),
-              type: el.getAttribute('type'),
-              role: el.getAttribute('role'),
-              testId: el.getAttribute('data-testid'),
-              ariaLabel: el.getAttribute('aria-label'),
-              placeholder: el.getAttribute('placeholder'),
-              text: el.innerText?.trim() || null,
-              attributes: Array.from(el.attributes).reduce((acc, attr) => {
-                acc[attr.name] = attr.value;
-                return acc;
-              }, {}),
-            }));
+            function buildTree(el) {
+              const node = {
+                tag: el.tagName.toLowerCase(),
+                id: el.id || null,
+                name: el.getAttribute('name'),
+                type: el.getAttribute('type'),
+                role: el.getAttribute('role'),
+                testId: el.getAttribute('data-testid'),
+                ariaLabel: el.getAttribute('aria-label'),
+                placeholder: el.getAttribute('placeholder'),
+                text: el.childNodes.length
+                  ? Array.from(el.childNodes)
+                      .filter(n => n.nodeType === Node.TEXT_NODE)
+                      .map(n => n.textContent.trim())
+                      .filter(Boolean)
+                      .join(' ') || null
+                  : el.innerText?.trim() || null,
+                attributes: Array.from(el.attributes).reduce((acc, attr) => {
+                  acc[attr.name] = attr.value;
+                  return acc;
+                }, {}),
+              };
+              const children = Array.from(el.children).map(buildTree);
+              if (children.length > 0) node.children = children;
+              return node;
+            }
             return {
               metadata: {
                 title: document.title,
                 url: window.location.href,
                 userAgent: navigator.userAgent,
               },
-              elements,
+              tree: buildTree(document.documentElement),
             };
           });
           fs.writeFileSync(outputPath, JSON.stringify([pageData], null, 2));
