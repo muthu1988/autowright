@@ -28,7 +28,7 @@ data/analysis/
 
 # Project outputs
 output/
-config/  # App-specific route configurations
+config/
 .cache/
 
 # OS generated files
