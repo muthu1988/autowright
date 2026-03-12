@@ -32,6 +32,80 @@ AutoWright is an intelligent test automation framework that automatically discov
 4. **Dynamic Analysis**: Records interactions and generates ARIA snapshots
 5. **Test Generation**: Creates comprehensive Playwright tests using specialized agents
 
+### Architecture Diagram
+
+```mermaid
+flowchart TB
+    subgraph Input["📥 Input"]
+        URL[("Start URL")]
+        Config["routes.config.json"]
+    end
+
+    subgraph Pipeline["🔄 AutoWright Pipeline"]
+        direction TB
+        
+        subgraph Discovery["Phase 1: Discovery"]
+            Auth["🔐 Authentication<br/>Detection & Login"]
+            Routes["🗺️ Route<br/>Exploration"]
+            Analysis["🔍 Route Analysis<br/>(Risk & Priority)"]
+        end
+        
+        subgraph DynamicAnalysis["Phase 2: Dynamic Analysis"]
+            DOM["📄 DOM Analysis"]
+            MCP["🔌 MCP Snapshots"]
+            Interactions["🎯 Interaction<br/>Recording"]
+        end
+    end
+
+    subgraph Agents["🤖 AI Agents"]
+        direction LR
+        
+        Orchestrator["<b>AutoWright</b><br/>Orchestrator"]
+        
+        subgraph TestCycle["Test Lifecycle"]
+            direction TB
+            Planner["📋 Test Planner<br/>Create strategies"]
+            Generator["⚙️ Test Generator<br/>Write test code"]
+            Healer["🔧 Test Healer<br/>Fix failures"]
+        end
+    end
+
+    subgraph Services["🛠️ Services"]
+        LLM["🧠 Ollama LLM<br/>qwen2.5:7b"]
+        Playwright["🎭 Playwright<br/>Browser Automation"]
+    end
+
+    subgraph Output["📤 Output"]
+        Tests["tests/*.spec.ts"]
+        Reports["playwright-report/"]
+        AnalysisData["data/analysis/"]
+    end
+
+    %% Connections
+    URL --> Auth
+    Config --> Routes
+    Auth --> Routes
+    Routes --> Analysis
+    Analysis --> DOM
+    DOM --> MCP
+    MCP --> Interactions
+    
+    Interactions --> Orchestrator
+    Orchestrator --> Planner
+    Planner --> Generator
+    Generator --> Healer
+    Healer -.->|iterate| Generator
+    
+    LLM --> Analysis
+    LLM --> Planner
+    Playwright --> MCP
+    Playwright --> Generator
+    
+    Generator --> Tests
+    Tests --> Reports
+    Analysis --> AnalysisData
+```
+
 ## 🤖 AI Agents
 
 AutoWright includes four specialized agents that work together to automate the testing pipeline:
