@@ -29,7 +29,10 @@ handoffs:
       initial ARIA snapshot, and recorded interactions from dynamic-analysis.json) to build a
       comprehensive test plan. Call planner_setup_page with the URL, then use the ARIA snapshot
       and interaction list to design scenarios WITHOUT re-exploring every element from scratch.
-      Finalise with planner_save_plan — save the plan inside the tests/ directory (e.g. tests/<route-path>/plan.md), NOT in the project root.
+      Finalise with planner_save_plan — save the plan to the exact path I specify (derived from
+      the route URL using the Path Mapping Convention: strip query params, strip numeric segments,
+      remove leading slash). For example, for /mortgage/servicing the plan goes to
+      tests/mortgage/servicing/plan.md. NEVER use generic folders like tests/dashboard/.
     send: true
   - label: "Phase 2 — Generate"
     agent: playwright-test-generator
@@ -37,7 +40,9 @@ handoffs:
       Using the saved test plan and the dynamic-analysis interaction data I am providing,
       generate Playwright .spec.ts files. For each scenario call generator_setup_page, replay
       the relevant interactions live to confirm selectors, read the log via generator_read_log,
-      then write the test via generator_write_test.
+      then write the test via generator_write_test. Save ALL generated spec files under the
+      route-based folder I specify (e.g. tests/mortgage/servicing/<scenario>.spec.ts).
+      NEVER flatten files into generic folders like tests/dashboard/ or tests/navigation/.
     send: true
   - label: "Phase 3 — Heal"
     agent: playwright-test-healer
@@ -65,9 +70,22 @@ eliminating redundant browser exploration and making planning and generation muc
 | `data/analysis/<path>/raw-dom.json` | Step 5 | Raw DOM HTML snapshot per route |
 | `data/storage-state.json` | Step 2 | Auth cookies — injected automatically by the Playwright MCP server |
 
-The path mapping convention for `<path>` is the route URL path with leading `/` removed and `/` replaced
-by the OS path separator. For example:
-- Route `/mortgage/servicing/make-a-payment` → `data/analysis/mortgage/servicing/make-a-payment/`
+## Path Mapping Convention
+
+To derive `<path>` from a route URL:
+1. Strip query parameters (`?` and everything after)
+2. Strip purely numeric path segments (e.g. `/3554123334/` → `/`) — these are dynamic IDs
+3. Remove the leading `/`
+4. Replace `/` with the OS path separator
+
+| Route URL | `<path>` |
+|---|---|
+| `/mortgage/servicing` | `mortgage/servicing` |
+| `/mortgage/servicing/make-a-payment?loanNumber=3554123334` | `mortgage/servicing/make-a-payment` |
+| `/mortgage/servicing/3554123334/tools-and-services` | `mortgage/servicing/tools-and-services` |
+| `/mortgage/servicing/3554123334/payment-assistance/disaster-relief` | `mortgage/servicing/payment-assistance/disaster-relief` |
+
+This convention applies to both `data/analysis/<path>/` and `tests/<path>/`.
 
 ## Authentication Management (Fully Automated)
 
@@ -136,6 +154,8 @@ console.log(authResult.message);
    manage-autopay                 | High   | Critical    | 8
    ```
 
+> **Reuse existing work**: Before planning or generating, check `tests/` for any existing `plan.md` files and `.spec.ts` files that target the same route. Reference them to avoid duplicate scenarios, preserve healed locators, and produce faster, error-free plans and tests.
+
 ### Phase 1 — Plan
 
 **Authentication**: Fully automated using existing ensureAuth.js
@@ -160,7 +180,10 @@ Delegate to `playwright-test-planner`, passing for each route:
   any action matching**: "Schedule payment", "Confirm", "Save", "Submit", "Cancel payment",
   "Delete", "Pay now"
 
-Explicitly instruct the planner to save the plan inside `tests/<path>/plan.md` (e.g. `tests/dashboard/plan.md`).
+Compute the resolved `<path>` for this route using the Path Mapping Convention above, then explicitly
+instruct the planner to save the plan to `tests/<resolved-path>/plan.md`.
+For example, for route `/mortgage/servicing/make-a-payment?loanNumber=3554123334`, instruct:
+"Save the plan to `tests/mortgage/servicing/make-a-payment/plan.md`".
 Wait until `planner_save_plan` confirms the plan is saved. Report: number of suites and scenarios.
 
 ### Phase 2 — Generate
@@ -175,8 +198,11 @@ if (!authResult.success) {
 console.log(authResult.message);
 ```
 
+Compute the resolved `<path>` for this route using the Path Mapping Convention above.
 Delegate to `playwright-test-generator` for **each scenario** in the saved plan, passing:
-- The scenario's suite name, test name, target file path, seed file (if any), and body
+- The scenario's suite name, test name, **target file path under `tests/<resolved-path>/`**, seed file (if any), and body.
+  For example, for route `/mortgage/servicing/make-a-payment?loanNumber=3554123334` and scenario
+  "Add Valid Todo", the target file path is `tests/mortgage/servicing/make-a-payment/add-valid-todo.spec.ts`.
 - The relevant `interactions[]` entries from `dynamic-analysis.json` for this route — the generator
   should use the recorded `ariaLine` values as hints for locator construction (prefer
   `getByRole` + `getByLabel` matching the `role` and `label` fields)

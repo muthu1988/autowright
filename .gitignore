@@ -21,6 +21,7 @@ coverage/
 # Playwright specific
 playwright-report/
 test-results/
+.playwright-mcp/
 tests/
 storage/
 data/storage-state.json

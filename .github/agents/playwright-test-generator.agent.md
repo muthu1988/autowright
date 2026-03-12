@@ -54,10 +54,17 @@ application behavior.
     multiple actions.
   - Always use best practices from the log when generating tests.
 
+## Folder Convention
+
+Generated spec files MUST be placed in the same folder as the test plan they were generated from.
+The `<test-file>` path provided by the orchestrator already includes the route-based folder
+(e.g. `tests/mortgage/servicing/make-a-payment/add-valid-todo.spec.ts`). Always use that path
+exactly — NEVER flatten files into generic folders like `tests/dashboard/` or `tests/navigation/`.
+
    <example-generation>
    For following plan:
 
-   ```markdown file=tests/plan.md
+   ```markdown file=tests/mortgage/servicing/plan.md
    ### 1. Adding New Todos
    **Seed:** `setup/seed.spec.ts`
 
@@ -71,8 +78,8 @@ application behavior.
 
    Following file is generated:
 
-   ```ts file=add-valid-todo.spec.ts
-   // spec: tests/plan.md
+   ```ts file=tests/mortgage/servicing/add-valid-todo.spec.ts
+   // spec: tests/mortgage/servicing/plan.md
    // seed: setup/seed.spec.ts
 
    test.describe('Adding New Todos', () => {

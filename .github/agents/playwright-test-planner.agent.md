@@ -71,7 +71,26 @@ You will:
 5. **Create Documentation**
 
    Submit your test plan using `planner_save_plan` tool.
-   **IMPORTANT**: Always save the plan file inside the `tests/` directory (e.g. `tests/<route-path>/plan.md`), never in the project root.
+   **IMPORTANT**: Always save the plan file inside the `tests/` directory, never in the project root.
+
+## Folder Convention
+
+Test plans MUST be saved to a path derived from the route URL in `config/routes.config.json`:
+
+1. Take the route URL (e.g. `/mortgage/servicing/make-a-payment?loanNumber=3554123334`)
+2. Strip query parameters (everything from `?` onward)
+3. Strip purely numeric path segments (e.g. `/3554123334/` → `/`) — these are dynamic IDs
+4. Remove the leading `/`
+5. Result is the folder path under `tests/`
+
+| Route URL | Plan path |
+|---|---|
+| `/mortgage/servicing` | `tests/mortgage/servicing/plan.md` |
+| `/mortgage/servicing/make-a-payment?loanNumber=3554123334` | `tests/mortgage/servicing/make-a-payment/plan.md` |
+| `/mortgage/servicing/3554123334/tools-and-services` | `tests/mortgage/servicing/tools-and-services/plan.md` |
+
+When the orchestrator provides a concrete `targetFolder` or path, always use it as-is.
+NEVER save plans to generic folders like `tests/dashboard/` or `tests/navigation/` — always mirror the route URL structure.
 
 **Quality Standards**:
 - Write steps that are specific enough for any tester to follow
